@@ -1,0 +1,5 @@
+!.gitignore
+Finance-Dogechain-*/
+Finance-Dogechain-*gz
+.build/
+.prove
