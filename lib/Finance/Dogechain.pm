@@ -7,6 +7,10 @@ use Finance::Dogechain::Address;
 use Finance::Dogechain::Block;
 use Finance::Dogechain::Transaction;
 
+sub Address     { return Finance::Dogechain::Address->new(     @_ ) }
+sub Block       { return Finance::Dogechain::Block->new(       @_ ) }
+sub Transaction { return Finance::Dogechain::Transaction->new( @_ ) }
+
 'to the moon';
 __END__
 =pod
