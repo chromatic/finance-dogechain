@@ -4,22 +4,22 @@ use Mojo::Base -base, -signatures, 'Finance::Dogechain::Base';
 use Finance::Dogechain::Transaction;
 
 has 'block_id';
-
-sub block($self) {
+has 'block', sub($self) {
     my $block = $self->return_field_if_success( '/block/' . $self->block_id, 'block' );
-    say JSON->new->pretty->encode( $block );
 
-    if ($block) {
-        $self->convert_transactions_in_place( $block->{txs} );
-    }
+    convert_transactions_in_place( $block->{txs} ) if $block;
 
     return $block;
-}
+};
 
-sub convert_transactions_in_place($self, $txs) {
+sub convert_transactions_in_place($txs) {
     while (my ($i, $tx_id) = each @$txs) {
         $txs->[$i] = Finance::Dogechain::Transaction->new( tx_id => $tx_id );
     }
+}
+
+sub transactions($self) {
+    return $self->block->{txs};
 }
 
 sub TO_JSON($self) {
@@ -38,11 +38,11 @@ Finance::Dogechain::Block - class representing blocks in the Dogechain API
 
     use Finance::Dogechain::Block;
 
-    my $block = Finance::Dogechain::Block(
+    my $block = Finance::Dogechain::Block->new(
         block_id => '2750235'
     );
 
-    for my $transaction ($block->{txs}->@*) { ... }
+    for my $transaction ($block->transactions->@*) { ... }
 
 =head1 DESCRIPTION
 

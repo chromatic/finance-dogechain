@@ -21,6 +21,13 @@ Finance::Dogechain - use the dogecoin.info API from Perl
 
 =head1 SYNOPSIS
 
+    my $address     = Finance::Dogechain::Address(     address        => '...' );
+    my $block       = Finance::Dogechain::Block(       block_id       => '...' );
+    my $transaction = Finance::Dogechain::Transaction( transaction_id => '...' );
+
+These methods are helper wrappers for constructors for the actual objects
+provided by this distribution.
+
 See L<Finance::Dogechain::Address>, L<Finance::Dogechain::Block>, and L<Finance::Dogechain::Transaction>.
 
 =head1 COPYRIGHT & LICENSE
