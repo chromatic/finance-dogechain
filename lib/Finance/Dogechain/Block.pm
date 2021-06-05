@@ -19,7 +19,9 @@ sub convert_transactions_in_place($txs) {
 }
 
 sub transactions($self) {
-    return $self->block->{txs};
+    # a coinbase block may not come back as a block with a height
+    # so return no transactions
+    return $self->block ? $self->block->{txs} : [];
 }
 
 sub TO_JSON($self) {
@@ -80,7 +82,15 @@ when possible.
 Returns an undefined value (C<undef> in scalar context or an empty list in list
 context) if the HTTP call did not succeed.
 
+This may also return an undefined value for coinbase blocks.
+
 Returns C<0> if the HTTP call did succeed but the API returned an unsuccessful payload.
+
+=head2 transactions()
+
+Returns an array reference of all transactions in this block. This array
+reference may be empty if there are no transactions, as in the case when the
+block is a coinbase, for example.
 
 =head2 TO_JSON()
 
